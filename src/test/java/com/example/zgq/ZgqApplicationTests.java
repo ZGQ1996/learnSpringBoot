@@ -4,9 +4,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +19,12 @@ public class ZgqApplicationTests {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Resource
+    private RedisTemplate redisTemplate;
+
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
 
 
 	@Test
@@ -47,8 +56,25 @@ public class ZgqApplicationTests {
     @Test
     public void testDel(){
         jdbcTemplate.execute("DELETE from test where name='孙标'");
-
         System.out.printf("success");
+    }
+
+
+
+
+    @Test
+    public void testRedis(){
+        //增 key：name，value：ay
+        redisTemplate.opsForValue().set("name","ay");
+        String name = (String)redisTemplate.opsForValue().get("name");
+        System.out.println(name);
+        //删除
+        redisTemplate.delete("name");
+        //更新
+        redisTemplate.opsForValue().set("name","al");
+        //查询
+        name = stringRedisTemplate.opsForValue().get("name");
+        System.out.println(name);
     }
 
 }
