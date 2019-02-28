@@ -21,7 +21,6 @@ import javax.annotation.Resource;
 @RequestMapping("/redis")
 public class HelloRedisTestController {
 
-
     @Resource
     private RedisTemplate redisTemplate;
 
