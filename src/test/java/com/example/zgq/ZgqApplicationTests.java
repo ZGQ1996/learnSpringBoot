@@ -27,6 +27,7 @@ public class ZgqApplicationTests {
         List<Map<String,Object>> result = jdbcTemplate.queryForList("select * from test");
         System.out.println("query result is = "+result.size());
 
+        System.out.printf("result="+result);
         System.out.printf("success");
     }
 
