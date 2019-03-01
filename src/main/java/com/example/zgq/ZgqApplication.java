@@ -7,6 +7,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @ImportResource(locations = {"classpath:spring-mvc.xml"})
+//加上这个注解，swagger在浏览器就可以访问了，不然就404
 @EnableSwagger2
 public class ZgqApplication {
 

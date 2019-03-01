@@ -1,5 +1,6 @@
 package com.example.zgq;
 
+import com.example.zgq.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +8,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +34,28 @@ public class ZgqApplicationTests {
 	@Test
 	public void contextLoads() {
 	}
+
+
+	@Test
+    public  void mysqlTest(){
+	    String sql="select * from user";
+	    List<User> userList =jdbcTemplate.query(sql, new RowMapper<User>() {
+            @Override
+            public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+                User user=new User();
+                user.setId(rs.getInt("id"));
+                user.setName(rs.getString("name"));
+                user.setPassword(rs.getString("password"));
+                return user;
+            }
+        });
+
+        System.out.printf("查询成功:");
+        for (User u: userList) {
+            System.out.printf("[id]:"+u.getId()+"[name]:"+u.getName());
+        }
+
+    }
 
 	@Test
     public void testSelect(){

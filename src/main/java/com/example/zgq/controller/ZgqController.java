@@ -1,5 +1,6 @@
 package com.example.zgq.controller;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,6 +19,7 @@ public class ZgqController {
 
 
     @RequestMapping("/zgq")
+    @ApiOperation(value = "zgq",httpMethod = "GET",response = String.class,notes = "index")
     public String index(){
         return "Hello zgq";
     }
