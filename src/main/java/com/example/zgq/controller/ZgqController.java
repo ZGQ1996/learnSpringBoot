@@ -24,4 +24,13 @@ public class ZgqController {
         return "Hello zgq";
     }
 
+
+    @RequestMapping("/exception")
+    @ApiOperation(value = "zgq",httpMethod = "GET",response = String.class,notes = "index")
+    public String Exception(){
+        String test=null;
+        test.split(",");
+        return "Hello test Exception";
+    }
+
 }

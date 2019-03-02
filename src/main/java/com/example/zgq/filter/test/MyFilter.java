@@ -12,7 +12,7 @@ import java.io.IOException;
  * @Version: $
  */
 
-@WebFilter(filterName = "myfilter",urlPatterns = "/*")
+@WebFilter(filterName = "myfilter",urlPatterns = "/abc")
 public class MyFilter implements Filter {
 
     @Override
