@@ -1,4 +1,4 @@
-package com.example.zgq.controller;
+package com.example.zgq.controller.test;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.RequestMapping;

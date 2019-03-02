@@ -2,6 +2,7 @@ package com.example.zgq.global.exception.test;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -12,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
  * @Version: $
  */
 
+//如果返回的数据格式是json，就需要添加这个注解
+//@ResponseBody
 @ControllerAdvice(basePackages = {"com.example.zgq.controller"})
 public class GlobalDefalutExpection {
 
