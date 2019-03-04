@@ -17,16 +17,16 @@ public class MyFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        System.out.printf("过滤器执行");
+        System.out.printf("doFilter -----");
     }
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        System.out.printf("过滤器初始化");
+        System.out.printf("filter  init -------------------------");
     }
 
     @Override
     public void destroy() {
-        System.out.printf("过滤器销毁");
+        System.out.printf("destroy -----");
     }
 }

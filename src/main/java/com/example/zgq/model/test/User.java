@@ -1,5 +1,10 @@
 package com.example.zgq.model.test;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.io.Serializable;
+
 /**
  * @ Author     ：Zgq
  * @ Date       ：Created in 11:49 2019/3/1
@@ -7,19 +12,23 @@ package com.example.zgq.model.test;
  * @ Modified By：
  * @Version: $
  */
-public class User {
 
-    private Integer id;
+@Entity
+@Table(name = "user")
+public class User implements Serializable{
+
+    @Id
+    private String id;
 
     private String name;
 
     private String password;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
