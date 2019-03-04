@@ -1,8 +1,11 @@
 package com.example.zgq.service.imp;
 
+import com.example.zgq.dao.UserDao;
 import com.example.zgq.model.test.User;
 import com.example.zgq.repository.test.UserRepository;
 import com.example.zgq.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,11 @@ public class UserServiceImp implements UserService {
 
     @Resource
     private UserRepository userRepository;
+
+    @Resource
+     private UserDao userDao;
+
+    Logger logger = LogManager.getLogger(this.getClass());
 
 
     @Override
@@ -51,6 +59,8 @@ public class UserServiceImp implements UserService {
     @Override
     public void delete(String id) {
         userRepository.deleteById(id);
+
+        logger.info("userId"+id+"被删除了");
     }
 
 
@@ -74,4 +84,14 @@ public class UserServiceImp implements UserService {
         return userRepository.findByIdIn(ids);
     }
 
+
+    @Override
+    public User findByNameAndPassword(String name, String password) {
+        return userDao.findByNameAndPassword(name,password);
+    }
+
+    @Override
+    public User findByUserName(String name) {
+        return userDao.findByUserName(name);
+    }
 }

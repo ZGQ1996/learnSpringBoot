@@ -1,5 +1,7 @@
 package com.example.zgq.redis.test;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -27,12 +29,15 @@ public class HelloRedisTestController {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
+    Logger logger = LogManager.getLogger(this.getClass());
+
     @RequestMapping("/index")
     public String index(){
         //保存字符串
-        stringRedisTemplate.opsForValue().set("aaa","111");
-        String string=stringRedisTemplate.opsForValue().get("aaa");
-        System.out.printf(string);
+        stringRedisTemplate.opsForValue().set("name","周国庆");
+        String string=stringRedisTemplate.opsForValue().get("name");
+
+        logger.info("redis插入的数据是："+string);
         return string;
     }
 

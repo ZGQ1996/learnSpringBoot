@@ -1,7 +1,13 @@
 package com.example.zgq;
 
+import com.example.zgq.model.test.Mood;
 import com.example.zgq.model.test.User;
+import com.example.zgq.mq.MoodProducer;
+import com.example.zgq.service.MoodService;
 import com.example.zgq.service.UserService;
+import org.apache.activemq.command.ActiveMQQueue;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +18,17 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
+import javax.jms.Destination;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +47,8 @@ public class ZgqApplicationTests {
 
     @Resource
     private UserService userService;
+
+    Logger logger = LogManager.getLogger(this.getClass());
 
 
 	@Test
@@ -60,7 +72,7 @@ public class ZgqApplicationTests {
 
         System.out.printf("查询成功:");
         for (User u: userList) {
-            System.out.printf("[id]:"+u.getId()+"[name]:"+u.getName());
+            System.out.printf("[id]:"+u.getId()+"[姓名name]:"+u.getName());
         }
 
     }
@@ -84,13 +96,15 @@ public class ZgqApplicationTests {
     public void testInsert(){
         jdbcTemplate.execute("INSERT INTO user(name) VALUES ('孙标')");
 
-        System.out.printf("success");
+        System.out.printf("插入成功");
     }
 
     @Test
     public void testDel(){
         jdbcTemplate.execute("DELETE from user where name='孙标'");
         System.out.printf("success");
+
+        logger.info("删除成功");
     }
 
 
@@ -157,4 +171,70 @@ public class ZgqApplicationTests {
     }
 
 
-}
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+    @Test
+    public void sendSimpleMail() throws Exception {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("1226807499@qq.com");
+        message.setTo("1226807499@qq.com");
+        message.setSubject("主题：简单邮件");
+        message.setText("测试邮件内容");
+
+        mailSender.send(message);
+    }
+
+
+    @Test
+    public void testMybatis() {
+        User user = userService.findByUserName("周国庆");
+        logger.info(user.getId() + user.getName());
+
+    }
+
+
+    @Resource
+    private MoodService MoodService;
+
+    @Test
+    public void testMood(){
+        Mood Mood = new Mood();
+        Mood.setId("1");
+        Mood.setUserId("1");
+        Mood.setPraiseNum(0);
+        Mood.setContent("这是我的第一天微信说说！！！");
+        Mood.setPublishTime(new Date());
+        Mood mood = MoodService.save(Mood);
+
+    }
+
+
+
+    @Resource
+    private MoodProducer MoodProducer;
+
+    @Test
+    public void testActiveMQ() {
+        Destination destination = new ActiveMQQueue("zgq.queue");
+        MoodProducer.sendMessage(destination, "hello,mq!!!");
+    }
+
+
+    @Test
+    public void testActiveMQAsynSave() {
+        Mood Mood = new Mood();
+        Mood.setId("2");
+        Mood.setUserId("2");
+        Mood.setPraiseNum(0);
+        Mood.setContent("这是我的第一条微信说说！！！");
+        Mood.setPublishTime(new Date());
+        String msg = MoodService.asynSave(Mood);
+        System.out.println("异步发表说说 :" + msg);
+
+    }
+
+
+
+    }
