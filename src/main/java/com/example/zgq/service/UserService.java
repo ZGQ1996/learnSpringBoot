@@ -8,14 +8,6 @@ import org.springframework.data.domain.Pageable;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * @ Author     ：Zgq
- * @ Date       ：Created in 10:11 2019/3/4
- * @ Description：service类
- * @ Modified By：
- * @Version: $
- */
-
 public interface UserService {
 
     User findById(String id);

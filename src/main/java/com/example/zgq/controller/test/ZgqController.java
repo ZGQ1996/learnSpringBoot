@@ -30,6 +30,9 @@ public class ZgqController {
     @RequestMapping("/zgq")
     @ApiOperation(value = "zgq",httpMethod = "GET",response = String.class,notes = "index")
     public String index(){
+
+        String a=null;
+        a.split("1");
         return "Hello zgq";
     }
 
@@ -47,7 +50,8 @@ public class ZgqController {
         //查询所有用户
        List<User> list= userService.findAll();
        model.addAttribute("users",list);
-       return new ModelAndView("user");
+        ModelAndView mav=new ModelAndView("user");
+       return mav;
     }
 
 }

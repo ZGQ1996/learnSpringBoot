@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Collection;
@@ -17,21 +16,20 @@ import java.util.List;
 
 /**
  * @ Author     ：Zgq
- * @ Date       ：Created in 10:14 2019/3/4
- * @ Description：实现类
+ * @ Date       ：Created in 22:24 2019/3/9
+ * @ Description：用户service层实现类
  * @ Modified By：
  * @Version: $
  */
 
-//@Transactional
 @Service
-public class UserServiceImp implements UserService {
+public class UserServiceImpl implements UserService {
 
     @Resource
     private UserRepository userRepository;
 
     @Resource
-     private UserDao userDao;
+    private UserDao userDao;
 
     Logger logger = LogManager.getLogger(this.getClass());
 
